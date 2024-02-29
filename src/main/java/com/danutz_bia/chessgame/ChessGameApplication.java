@@ -9,5 +9,4 @@ public class ChessGameApplication {
     public static void main(String[] args) {
         SpringApplication.run(ChessGameApplication.class, args);
     }
-
 }
