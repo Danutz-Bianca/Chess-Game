@@ -12,7 +12,7 @@ import java.util.Collections;
 
 public class Pawn extends Piece {
     private final static int[] CANDIDATE_MOVE_COORDINATES = {8, 16, 7, 9};
-    Pawn(final int piecePosition,final Color pieceColor) {
+    public Pawn(final int piecePosition,final Color pieceColor) {
         super(piecePosition, pieceColor);
     }
     //TODO

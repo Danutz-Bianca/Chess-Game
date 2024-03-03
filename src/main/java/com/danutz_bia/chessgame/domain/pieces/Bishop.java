@@ -13,7 +13,7 @@ import java.util.Collections;
 
 public class Bishop extends Piece{
     private static  int[] CANDIDATE_MOVE = {-9,-7,7,9};
-    Bishop(int piecePosition, Color pieceColor) {
+    public Bishop(int piecePosition, Color pieceColor) {
         super(piecePosition, pieceColor);
     }
 

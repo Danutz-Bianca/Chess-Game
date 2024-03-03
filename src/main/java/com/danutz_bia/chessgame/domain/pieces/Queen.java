@@ -14,7 +14,7 @@ import java.util.Objects;
 
 public class Queen extends Piece {
     private static int[] CANDIDATE_MOVE={-9,-8,-7,-1,1,7,8,9};
-    Queen(int piecePosition, Color pieceColor) {
+    public Queen(int piecePosition, Color pieceColor) {
         super(piecePosition, pieceColor);
     }
 

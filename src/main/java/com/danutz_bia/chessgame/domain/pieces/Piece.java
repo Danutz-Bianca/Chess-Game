@@ -19,7 +19,7 @@ public abstract class Piece {
     protected final Color pieceColor;
     protected final boolean isTheFirstMove;
 
-    Piece(final int piecePosition,final Color pieceColor){
+    public Piece(final int piecePosition,final Color pieceColor){
         this.pieceColor=pieceColor;
         this.piecePosition=piecePosition;
         //TODO

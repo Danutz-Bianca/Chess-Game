@@ -14,7 +14,7 @@ import java.util.List;
 
 public class Knight extends Piece{
     private final int[] knightMoves = {-17,-15,-10,-6,6,10,15,17};
-    Knight(int piecePosition, Color pieceColor) {
+    public Knight(int piecePosition, Color pieceColor) {
         super(piecePosition, pieceColor);
     }
 
