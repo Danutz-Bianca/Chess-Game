@@ -1,13 +1,17 @@
 package com.danutz_bia.chessgame.domain.board;
 
+import com.danutz_bia.chessgame.domain.BlackPlayer;
 import com.danutz_bia.chessgame.domain.Color;
+import com.danutz_bia.chessgame.domain.WhitePlayer;
 import com.danutz_bia.chessgame.domain.pieces.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Board {
+    private final Map<Integer,Piece>boardConfig;
     //nu poti avea un imutabble array in java dar poti avea list asa ca de aia folosim
     @Getter
     private final List<Tile> gameBoard;
@@ -17,14 +21,54 @@ public class Board {
     @Getter
     @Setter
     private Collection<Piece>allBlackPieces;
+    private Collection<Move>allBlackMove;
+    private Collection<Move>allWhiteMove;
+    @Getter
+    @Setter
+    private WhitePlayer whitePlayer;
+    @Getter
+    @Setter
+    private BlackPlayer blackPlayer;
 
 //fiecare tile din board o sa aiba un id
     private Board(Builder builder) {
+        this.boardConfig=builder.boardConfig;
         this.gameBoard=createGameBoard(builder);
-        this.allWhitePieces=null;
-        this.allBlackPieces=null;
+        this.allWhitePieces=bringAllPieces(gameBoard,Color.WHITE);
+        this.allBlackPieces=bringAllPieces(gameBoard,Color.BLACK);
+        final Collection<Move> whiteStandardMoves = calculateLegalMoves(this.allWhitePieces);
+        final Collection<Move> blackStandardMoves = calculateLegalMoves(this.allBlackPieces);
+        this.whitePlayer = new WhitePlayer(this, whiteStandardMoves, blackStandardMoves);
+        this.blackPlayer = new BlackPlayer(this, whiteStandardMoves, blackStandardMoves);
     }
-    private static  Board createStandardBoard(){
+
+    private Collection<Move> calculateLegalMoves(final Collection<Piece> pieces) {
+        Collection<Move>allMoves=new ArrayList<>();
+        for(Piece piece:pieces){
+            allMoves.add(new Move(this,piece, piece.getPiecePosition()));
+        }
+        return allMoves;
+    }
+
+
+    private Collection<Piece> bringAllPieces(List<Tile>gameBoard,Color colorPieces) {
+        final List<Piece>piecesList=new ArrayList<>();
+        for(Tile tile:gameBoard){
+            Piece pieceOnTile=tile.getPiece();
+            Color colorOfPiece=null;
+            if(pieceOnTile!=null) {
+                 colorOfPiece = pieceOnTile.getPieceColor();
+            }
+            if(colorOfPiece==colorPieces){
+                piecesList.add(pieceOnTile);
+            }
+        }
+        return Collections.unmodifiableCollection(piecesList);
+    }
+
+
+    //the initialization of the bord
+    public static  Board createInitialBoard(){
         Builder builder=new Builder();
         builder.setPiece(new Rook(0,Color.BLACK));
         builder.setPiece(new Knight(1,Color.BLACK));
@@ -51,11 +95,30 @@ public class Board {
         builder.setNextMoveMaker(Color.WHITE);
         return builder.build();
     }
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        for (int i = 0; i < 64; i++) {
+            final String tileText = prettyPrint(this.gameBoard.get(i).getPiece());
+            builder.append(String.format("%3s", tileText));
+            if ((i + 1) % 8 == 0) {
+                builder.append("\n");
+            }
+        }
+        return builder.toString();
+    }
+    private static String prettyPrint(final Piece piece) {
+        if(piece != null) {
+            return piece.getPieceColor().isBlack() ?
+                    piece.toString().toLowerCase() : piece.toString();
+        }
+        return "-";
+    }
 
     private static List<Tile> createGameBoard( final Builder builder) {
         final Tile[] tiles =new Tile[64];
         for(int i=0;i<64;i++){
-            tiles[i]=Tile.createTile(i,builder.boardConfig.get(i));
+            tiles[i]=Tile.createTile(i, builder.getBoardConfig().get(i));
         }
         //a vector is transformed in list
         List<Tile> tilesList = new ArrayList<>(Arrays.asList(tiles));
@@ -68,10 +131,11 @@ public class Board {
 
     //we build an instance of the board
     public static class Builder{
-        Map<Integer, Piece> boardConfig;
+        private Map<Integer, Piece> boardConfig;
         @Getter
         private Color nextMoveMaker;
         public Builder(){
+            this.setBoardConfig(new HashMap<>());
         }
         //Integer is for Tile id and Piece is for the piece that is on the tile
         //we have immutable things and once we invoke the build method we will create a board
@@ -79,7 +143,7 @@ public class Board {
             return new Board(this);
         }
         public Builder setPiece(final Piece piece){
-            this.boardConfig.put(piece.getPiecePosition(), piece);
+            this.getBoardConfig().put(piece.getPiecePosition(), piece);
             return this;
         }
         public Builder setNextMoveMaker(final Color nextMoveMaker){
@@ -87,5 +151,12 @@ public class Board {
             return this;
         }
 
+        public Map<Integer, Piece> getBoardConfig() {
+            return boardConfig;
+        }
+
+        public void setBoardConfig(Map<Integer, Piece> boardConfig) {
+            this.boardConfig = boardConfig;
+        }
     }
 }

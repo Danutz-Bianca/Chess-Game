@@ -14,7 +14,7 @@ import java.util.Collections;
 public class Bishop extends Piece{
     private static  int[] CANDIDATE_MOVE = {-9,-7,7,9};
     public Bishop(int piecePosition, Color pieceColor) {
-        super(piecePosition, pieceColor);
+        super(PieceType.BISHOP,piecePosition, pieceColor);
     }
 
     @Override
@@ -47,9 +47,9 @@ public class Bishop extends Piece{
         return Collections.unmodifiableCollection(legalMoves);
     }
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset){
-        return BoardUtils.FIRST_COLOUMN[currentPosition] && (candidateOffset == -9 || candidateOffset == 7);
+        return BoardUtils.FIRST_COLUMN.get(currentPosition) && (candidateOffset == -9 || candidateOffset == 7);
     }
     private static boolean isEighthColumnExclusion(final int currentPosition, final int candidateOffset){
-        return BoardUtils.EIGHTH_COLOUMN[currentPosition] && (candidateOffset == -7 || candidateOffset == 9);
+        return BoardUtils.EIGHTH_COLUMN.get(currentPosition) && (candidateOffset == -7 || candidateOffset == 9);
     }
 }

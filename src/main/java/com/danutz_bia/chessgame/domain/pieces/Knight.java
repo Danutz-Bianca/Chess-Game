@@ -15,7 +15,7 @@ import java.util.List;
 public class Knight extends Piece{
     private final int[] knightMoves = {-17,-15,-10,-6,6,10,15,17};
     public Knight(int piecePosition, Color pieceColor) {
-        super(piecePosition, pieceColor);
+        super(PieceType.KNIGHT,piecePosition, pieceColor);
     }
 
     @Override
@@ -50,18 +50,18 @@ public class Knight extends Piece{
 
     private boolean isEighthColumnExclusion(final int piecePosition,final int knightMove) {
 
-        return BoardUtils.EIGHTH_COLOUMN[piecePosition] && (knightMove == 17 || knightMove == 10 || knightMove == -6 || knightMove == -15);
+        return BoardUtils.EIGHTH_COLUMN.get(piecePosition) && (knightMove == 17 || knightMove == 10 || knightMove == -6 || knightMove == -15);
     }
 
     private boolean isSeventhColumnExclusion(final int piecePosition,final int knightMove) {
-        return BoardUtils.SEVENTH_COLOUMN[piecePosition] && (knightMove == 10 || knightMove == -6);
+        return BoardUtils.SEVENTH_COLUMN.get(piecePosition) && (knightMove == 10 || knightMove == -6);
     }
 
     private boolean isSecondColumnExclusion(final int piecePosition,final int knightMove) {
-        return BoardUtils.SECOND_COLOUMN[piecePosition] && (knightMove == -10 || knightMove == 6);
+        return BoardUtils.SECOND_COLUMN.get(piecePosition) && (knightMove == -10 || knightMove == 6);
     }
 
     private static boolean isFirstColumnExclusion(final int piecePosition,final int knightMove) {
-        return BoardUtils.FIRST_COLOUMN[piecePosition] && (knightMove == -17 || knightMove == -10 || knightMove == 6 || knightMove == 15);
+        return BoardUtils.FIRST_COLUMN.get(piecePosition) && (knightMove == -17 || knightMove == -10 || knightMove == 6 || knightMove == 15);
     }
 }

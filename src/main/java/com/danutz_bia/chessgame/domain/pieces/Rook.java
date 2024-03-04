@@ -16,7 +16,7 @@ import java.util.Collections;
 public class Rook extends Piece{
     private final static int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {-8, -1, 1, 8};
     public Rook(int piecePosition, Color pieceColor) {
-        super(piecePosition, pieceColor);
+        super(PieceType.ROOK,piecePosition, pieceColor);
     }
 
     @Override
@@ -51,9 +51,9 @@ public class Rook extends Piece{
         return Collections.unmodifiableCollection(legalMoves);
     }
     private  static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset){
-        return (BoardUtils.FIRST_COLOUMN != null && BoardUtils.FIRST_COLOUMN[currentPosition]) && (candidateOffset == -1);
+        return (BoardUtils.FIRST_COLUMN != null && BoardUtils.FIRST_COLUMN.get(currentPosition)) && (candidateOffset == -1);
     }
     private static boolean isEighthColumnExclusion(final int currentPosition, final int candidateOffset){
-        return (BoardUtils.EIGHTH_COLOUMN != null && BoardUtils.EIGHTH_COLOUMN[currentPosition]) && (candidateOffset == 1);
+        return (BoardUtils.EIGHTH_COLUMN != null && BoardUtils.EIGHTH_COLUMN.get(currentPosition)) && (candidateOffset == 1);
     }
 }

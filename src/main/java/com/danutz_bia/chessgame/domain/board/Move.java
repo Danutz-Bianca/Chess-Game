@@ -2,10 +2,14 @@ package com.danutz_bia.chessgame.domain.board;
 
 
 import com.danutz_bia.chessgame.domain.pieces.Piece;
+import lombok.Getter;
+import lombok.Setter;
 
 public class Move {
     private final Board board;
     private final Piece movedPiece;
+    @Getter
+
     final int destinationCoordinate;
 
     public Move(Board board, Piece movedPiece, int destinationCoordinate) {

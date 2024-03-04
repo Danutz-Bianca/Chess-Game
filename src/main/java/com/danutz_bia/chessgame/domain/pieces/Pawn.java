@@ -13,7 +13,7 @@ import java.util.Collections;
 public class Pawn extends Piece {
     private final static int[] CANDIDATE_MOVE_COORDINATES = {8, 16, 7, 9};
     public Pawn(final int piecePosition,final Color pieceColor) {
-        super(piecePosition, pieceColor);
+        super(PieceType.PAWN,piecePosition, pieceColor);
     }
     //TODO
     //if it is in an initial position (2 row ) it can move 2 squares
@@ -33,30 +33,30 @@ public class Pawn extends Piece {
                 //TODO
                 //it is it on the final row it can be promoted to a queen
 
-                    if(BoardUtils.SECOND_ROW[this.piecePosition] && this.pieceColor.isBlack() ||
-                            BoardUtils.SEVENTH_ROW[this.piecePosition] && this.pieceColor.isWhite())
+                    if(BoardUtils.SECOND_ROW.get(this.piecePosition) && this.pieceColor.isBlack() ||
+                            BoardUtils.SEVENTH_ROW.get(this.piecePosition) && this.pieceColor.isWhite())
                     {
                         //TODO
                         legalMoves.add(new Move.PawnMove(board,this,destinationCandidate));
                     }
 
             }else if(candidate==16 && this.isTheFirstMove() &&
-                    (BoardUtils.SECOND_ROW[this.piecePosition] && this.getPieceColor().isBlack()) ||
-                    (BoardUtils.SEVENTH_ROW[this.piecePosition] && this.getPieceColor().isWhite())){
+                    (BoardUtils.SECOND_ROW.get(this.piecePosition) && this.getPieceColor().isBlack()) ||
+                    (BoardUtils.SEVENTH_ROW.get(this.piecePosition) && this.getPieceColor().isWhite())){
                 final int firstTile =this.piecePosition+8*this.getPieceColor().directionPices();
                 //final int secondTile =this.piecePosition+16*this.getPieceColor().directionPices();
                 if(!board.getTile(firstTile).isTileOccupied() && !board.getTile(destinationCandidate).isTileOccupied()){
                     legalMoves.add(new Move.PawnMove(board,this,destinationCandidate));
                 }
-            }else if(candidate==7 &&!((BoardUtils.EIGHTH_COLOUMN[this.piecePosition] && this.pieceColor.isWhite()) ||
-                        (BoardUtils.FIRST_COLOUMN[this.piecePosition] && this.pieceColor.isBlack()))){
+            }else if(candidate==7 &&!((BoardUtils.EIGHTH_COLUMN.get(this.piecePosition) && this.pieceColor.isWhite()) ||
+                        (BoardUtils.FIRST_COLUMN.get(this.piecePosition) && this.pieceColor.isBlack()))){
                     if(board.getTile(destinationCandidate).isTileOccupied()){
                         final Piece pieceOnCandidate = board.getTile(destinationCandidate).getPiece();
                         if(this.pieceColor!=pieceOnCandidate.getPieceColor()){
                             //TODO
                             //if it is on the final row it can be promoted to a queen
-                            if(BoardUtils.SECOND_ROW[this.piecePosition] && this.pieceColor.isBlack() ||
-                                    BoardUtils.SEVENTH_ROW[this.piecePosition] && this.pieceColor.isWhite()){
+                            if(BoardUtils.SECOND_ROW.get(this.piecePosition) && this.pieceColor.isBlack() ||
+                                    BoardUtils.SEVENTH_ROW.get(this.piecePosition) && this.pieceColor.isWhite()){
                                 legalMoves.add(new Move.AttackMove(board,this,destinationCandidate,pieceOnCandidate));
                             }else{
                                 //TODO
@@ -64,15 +64,15 @@ public class Pawn extends Piece {
                             }
                         }
                     }
-            }else if(candidate==9 &&!((BoardUtils.FIRST_COLOUMN[this.piecePosition] && this.pieceColor.isWhite()) ||
-                        (BoardUtils.EIGHTH_COLOUMN[this.piecePosition] && this.pieceColor.isBlack()))){
+            }else if(candidate==9 &&!((BoardUtils.FIRST_COLUMN.get(this.piecePosition) && this.pieceColor.isWhite()) ||
+                        (BoardUtils.EIGHTH_COLUMN.get(this.piecePosition) && this.pieceColor.isBlack()))){
                     if(board.getTile(destinationCandidate).isTileOccupied()){
                         final Piece pieceOnCandidate = board.getTile(destinationCandidate).getPiece();
                         if(this.pieceColor!=pieceOnCandidate.getPieceColor()){
                             //TODO
                             //if it is on the final row it can be promoted to a queen
-                            if(BoardUtils.SECOND_ROW[this.piecePosition] && this.pieceColor.isBlack() ||
-                                    BoardUtils.SEVENTH_ROW[this.piecePosition] && this.pieceColor.isWhite()){
+                            if(BoardUtils.SECOND_ROW.get(this.piecePosition) && this.pieceColor.isBlack() ||
+                                    BoardUtils.SEVENTH_ROW.get(this.piecePosition) && this.pieceColor.isWhite()){
                                 legalMoves.add(new Move.AttackMove(board,this,destinationCandidate,pieceOnCandidate));
                             }else{
                                 legalMoves.add(new Move.AttackMove(board,this,destinationCandidate,pieceOnCandidate));

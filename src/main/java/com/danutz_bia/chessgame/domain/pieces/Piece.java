@@ -18,16 +18,27 @@ public abstract class Piece {
     protected final int piecePosition;
     protected final Color pieceColor;
     protected final boolean isTheFirstMove;
+    @Getter
+    public final PieceType pieceType;
 
-    public Piece(final int piecePosition,final Color pieceColor){
+    public Piece( final PieceType pieceType,final int piecePosition,final Color pieceColor){
         this.pieceColor=pieceColor;
         this.piecePosition=piecePosition;
         //TODO
         this.isTheFirstMove=false;
+        this.pieceType=pieceType;
     }
+
+    @Override
+    public String toString() {
+        return pieceType.toString();
+    }
+
     //puteam si set sau collection pt ca nu ar trebui sa fie duplicate
     public abstract Collection<Move> calculateLegalMoves(final Board board);
     protected boolean isTheFirstMove() {
         return this.isTheFirstMove;
     }
+
+
 }

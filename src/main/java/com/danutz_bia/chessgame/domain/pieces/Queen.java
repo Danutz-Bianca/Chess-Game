@@ -15,7 +15,7 @@ import java.util.Objects;
 public class Queen extends Piece {
     private static int[] CANDIDATE_MOVE={-9,-8,-7,-1,1,7,8,9};
     public Queen(int piecePosition, Color pieceColor) {
-        super(piecePosition, pieceColor);
+        super(PieceType.QUEEN,piecePosition, pieceColor);
     }
 
     @Override
@@ -47,9 +47,9 @@ public class Queen extends Piece {
         return Collections.unmodifiableCollection(legalMoves);
     }
     private static boolean isFirstColumnExclusion(final int currentPosition, final int candidateOffset){
-        return Objects.requireNonNull(BoardUtils.FIRST_COLOUMN)[currentPosition] && (candidateOffset == -9 || candidateOffset == 7 || candidateOffset==-1);
+        return Objects.requireNonNull(BoardUtils.FIRST_COLUMN).get(currentPosition) && (candidateOffset == -9 || candidateOffset == 7 || candidateOffset==-1);
     }
     private static boolean isEighthColumnExclusion(final int currentPosition, final int candidateOffset){
-        return Objects.requireNonNull(BoardUtils.EIGHTH_COLOUMN)[currentPosition] && (candidateOffset == -7 || candidateOffset == 9 || candidateOffset==1);
+        return Objects.requireNonNull(BoardUtils.EIGHTH_COLUMN).get(currentPosition) && (candidateOffset == -7 || candidateOffset == 9 || candidateOffset==1);
     }
 }
